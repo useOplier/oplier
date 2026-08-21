@@ -1,0 +1,34 @@
+{
+  "name": "@oplier/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Part I — long-running UPM worker: Pyth price stream, condition evaluation, execution orchestration. Runs as a supervised process on EC2 (doc 08 §3/§10), never as a request-driven function.",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "tsx src/main.ts",
+    "typecheck": "tsc --noEmit",
+    "preflight": "tsx src/preflight.ts"
+  },
+  "dependencies": {
+    "@oplier/amm-execution": "workspace:*",
+    "@oplier/data-layer": "workspace:*",
+    "@oplier/db": "workspace:*",
+    "@oplier/engine": "workspace:*",
+    "@oplier/permissions": "workspace:*",
+    "@account-kit/infra": "^4.88.5",
+    "@account-kit/smart-contracts": "^4.88.5",
+    "@account-kit/wallet-client": "^4.88.5",
+    "@aa-sdk/core": "^4.88.5",
+    "@pythnetwork/hermes-client": "^2.1.0",
+    "dotenv": "17.4.2",
+    "drizzle-orm": "0.33.0",
+    "viem": "2.55.13",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.0",
+    "tsx": "4.19.2",
+    "typescript": "5.7.3"
+  }
+}

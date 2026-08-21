@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "outDir": "dist",
+    "forceConsistentCasingInFileNames": true,
+    // Part I: was `"types": []`, which excluded @types/node and made every `node:test` /
+    // `node:assert` import in test/ fail to resolve under `tsc --noEmit`. The README attributed
+    // that to the sandbox having no network to install @types/node; the real cause was this
+    // setting, and @types/node is present in the workspace.
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts"]
+}

@@ -1,0 +1,66 @@
+# Oplier UPM Worker — systemd unit (doc 08 §10: supervised, auto-restart on crash and on reboot).
+#
+# Install:
+#   sudo cp deploy/oplier-worker.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now oplier-worker
+#
+# Adjust User/WorkingDirectory to match the deploy location if it differs.
+
+[Unit]
+Description=Oplier UPM Worker (condition evaluation + execution orchestration)
+Documentation=file:///opt/oplier/DEPLOYMENT_RUNBOOK.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=oplier
+Group=oplier
+WorkingDirectory=/opt/oplier/apps/worker
+
+# `pnpm start` runs `tsx src/main.ts`. Absolute path because systemd has no shell PATH by default.
+ExecStart=/usr/bin/env pnpm start
+
+# doc 08 §10: "A process crash does not permanently stop UPM monitoring."
+Restart=always
+RestartSec=5s
+
+# A worker that fails preflight exits non-zero every time (bad feed id, wrong chain, DB unreachable).
+# Without a burst limit systemd would restart it forever at 5s intervals; this makes a persistent
+# misconfiguration visible as a failed unit instead of an endless quiet loop.
+StartLimitIntervalSec=300
+StartLimitBurst=10
+
+# Logs to journald as line-delimited JSON (see src/lib/logger.ts).
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=oplier-worker
+
+# Secrets come from the env file, never from this unit (doc 08 §11 — not committed).
+# 0600, owned by the service user.
+EnvironmentFile=/opt/oplier/apps/worker/.env
+
+# ── Resource limits (doc 08 §3: t3.small, ~1GiB available) ───────────────────
+# The api and worker share that budget. MemoryMax kills-and-restarts a leaking worker rather than
+# letting the OOM killer pick a victim — which could otherwise take out the API or Postgres client
+# instead of the actual offender.
+MemoryMax=400M
+MemoryHigh=320M
+# Node's own heap cap, set below MemoryMax so V8 GCs hard before systemd intervenes.
+Environment=NODE_OPTIONS=--max-old-space-size=300
+
+# ── Hardening ───────────────────────────────────────────────────────────────
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/oplier/apps/worker
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target

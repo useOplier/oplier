@@ -1,0 +1,23 @@
+{
+  "name": "oplier",
+  "private": true,
+  "version": "0.0.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "db:generate": "pnpm --filter @oplier/db run generate",
+    "db:migrate": "pnpm --filter @oplier/db run migrate",
+    "db:seed": "pnpm --filter @oplier/db run seed"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "turbo": "2.3.0",
+    "typescript": "5.7.3"
+  }
+}

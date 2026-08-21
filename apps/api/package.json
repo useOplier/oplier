@@ -1,0 +1,36 @@
+{
+  "name": "@oplier/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@oplier/amm-execution": "workspace:*",
+    "@oplier/db": "workspace:*",
+    "@oplier/llm": "workspace:*",
+    "@oplier/shared-types": "workspace:*",
+    "@aa-sdk/core": "^4.88.5",
+    "@account-kit/infra": "^4.88.5",
+    "@account-kit/wallet-client": "^4.88.5",
+    "@fastify/cookie": "11.1.2",
+    "@fastify/cors": "11.3.0",
+    "dotenv": "17.4.2",
+    "drizzle-orm": "0.33.0",
+    "ethers": "6.13.4",
+    "fastify": "5.11.3",
+    "fastify-plugin": "6.0.0",
+    "jose": "6.2.8",
+    "siwe": "3.0.0",
+    "viem": "2.55.13",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.0",
+    "tsx": "4.19.2",
+    "typescript": "5.7.3"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@oplier/permissions",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Part E — Alchemy Smart Wallets: smart account creation + session-key/spend-limit scoping + System authorization lifecycle. Implements the vendor-agnostic PermissionService interface consumed by @oplier/engine (Part C).",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "viem": "^2.21.0",
+    "@account-kit/wallet-client": "^4.0.0",
+    "@account-kit/infra": "^4.0.0",
+    "@aa-sdk/core": "^4.0.0"
+  },
+  "devDependencies": {
+    "@oplier/db": "workspace:*",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  },
+  "comment_dependencies": "Version pins are placeholders — confirm exact current versions when this is actually installed; see FINDINGS.md §2. @oplier/db is a devDependency only, used by the commented-out drizzle-adapter.ts reference sketch (same pattern Part C used) — not a runtime dependency of the vendor-agnostic PermissionService itself."
+}

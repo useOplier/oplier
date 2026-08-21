@@ -1,0 +1,29 @@
+{
+  "name": "@oplier/amm-execution",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Part F — AMM routing & execution against Part K's self-deployed Uniswap V2-style AMM on X Layer testnet.",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "tsx --test test/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "viem": "^2.x"
+  },
+  "peerDependenciesMeta": {
+    "viem": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "tsx": "^4.x",
+    "typescript": "^5.x"
+  },
+  "notes": {
+    "no-viem-runtime-dependency": "This package is written with zero runtime dependency on viem/ethers so it can be built and unit-tested (node:test + tsx) in a sandbox with no package-registry access. Calldata encoding (execution/calldata-encoder.ts) and log decoding (reconciliation/reconcile.ts) are injected seams — apps/worker wires viem's encodeFunctionData/decodeEventLog against this package's exported ABIs (src/abi/*) for the real implementation. This is a deliberate, flagged design decision, not an oversight — see README.md."
+  }
+}

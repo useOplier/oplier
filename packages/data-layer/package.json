@@ -1,0 +1,28 @@
+{
+  "name": "@oplier/data-layer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Part D+J: Pyth market prices + BLS/FRED/Fed/SEC EDGAR fundamental data + High Impact News classification",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "tsx --test test/**/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "ingest:bls": "tsx src/ingestion/run-bls-job.ts",
+    "ingest:fred": "tsx src/ingestion/run-fred-job.ts",
+    "ingest:fed": "tsx src/ingestion/run-fed-job.ts",
+    "ingest:edgar": "tsx src/ingestion/run-edgar-job.ts"
+  },
+  "dependencies": {
+    "@pythnetwork/hermes-client": "^2.0.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  },
+  "peerDependencies": {
+    "@oplier/db": "workspace:*"
+  }
+}

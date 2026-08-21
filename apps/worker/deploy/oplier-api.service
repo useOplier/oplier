@@ -1,0 +1,55 @@
+# Oplier API — systemd unit (doc 08 §10). Companion to oplier-worker.service.
+#
+# Install:
+#   sudo cp deploy/oplier-api.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now oplier-api
+#
+# Included here (in apps/worker/deploy/) because Part I owns standing up BOTH EC2 processes per
+# doc 08 §12, and keeping the two units side by side makes the memory split between them explicit.
+
+[Unit]
+Description=Oplier API (Fastify backend)
+Documentation=file:///opt/oplier/DEPLOYMENT_RUNBOOK.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=oplier
+Group=oplier
+WorkingDirectory=/opt/oplier/apps/api
+ExecStart=/usr/bin/env pnpm start
+
+Restart=always
+RestartSec=5s
+StartLimitIntervalSec=300
+StartLimitBurst=10
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=oplier-api
+
+EnvironmentFile=/opt/oplier/apps/api/.env
+
+# ── Resource limits (doc 08 §3: ~1GiB available, shared with the worker) ─────
+# Worker gets 400M, API gets 400M, leaving ~200M headroom for the OS and pnpm/tsx overhead.
+# The API is request-driven and can shed load; the worker cannot miss a price tick, so if this
+# split ever needs to change, take memory from the API first.
+MemoryMax=400M
+MemoryHigh=320M
+Environment=NODE_OPTIONS=--max-old-space-size=300
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/oplier/apps/api
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target

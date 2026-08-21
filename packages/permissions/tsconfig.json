@@ -1,0 +1,17 @@
+{
+  "_comment": "Part I: was `extends: ../config/tsconfig.base.json`, which does not exist — packages/config is an empty directory and this package was its only referencing consumer, so `tsc --noEmit` here failed with TS5083 before compiling anything. Repointed at the repo-root base config, the same one apps/api extends.",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ES2022",
+    "strict": true,
+    "declaration": true,
+    "composite": false,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "test", "src/repository/drizzle-adapter.ts"]
+}

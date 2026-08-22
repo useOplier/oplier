@@ -19,7 +19,7 @@ export function Footer() {
             X (formerly Twitter)
           </a>
           <a
-            href="https://github.com"
+            href="https://github.com/useOplier/oplier"
             target="_blank"
             rel="noreferrer"
             className="transition-colors hover:text-ink"

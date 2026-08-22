@@ -15,3 +15,6 @@ out/
 *.log
 .DS_Store
 Thumbs.db
+# Tooling caches & local agent settings
+.turbo/
+.vercel/

@@ -295,7 +295,7 @@ The deployment uses the standard **Factory, Router, and Pair** contracts, includ
 ## Try It
 
 1. Get **USDG** and **OKB** from the [OKX X Layer Faucet](https://web3.okx.com/xlayer/faucet/xlayerfaucet).
-2. Open the live Oplier app: **[Launch Oplier](YOUR_LIVE_APP_URL)**
+2. Open the live Oplier app: **[Launch Oplier](https://oplier.vercel.app/app/home)**
 
 ## Supported Assets
 
@@ -309,9 +309,9 @@ The deployment uses the standard **Factory, Router, and Pair** contracts, includ
 
 ## Links
 
-- **Website:** [Oplier](YOUR_WEBSITE_URL)
-- **Live app:** [Launch Oplier](YOUR_LIVE_APP_URL)
-- **X / Twitter:** [Oplier on X](https://useoplier/x.com)
+- **Website:** [Oplier](https://oplier.vercel.app)
+- **Live app:** [Launch Oplier](https://oplier.vercel.app/app/home)
+- **X / Twitter:** [Oplier on X](https://x.com/useoplier)
 
 ---
 

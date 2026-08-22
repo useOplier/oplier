@@ -76,6 +76,24 @@ const nextConfig = {
       })
     );
 
+    // ---------------------------------------------------------------------
+    // pino-pretty — same class of problem as the two blocks above.
+    //
+    // Chain: @rainbow-me/rainbowkit -> wagmi -> @walletconnect/universal-provider
+    // -> @walletconnect/logger -> pino. pino loads `pino-pretty` as an OPTIONAL
+    // runtime transport (a dev-only log beautifier) via a bare require inside
+    // lib/tools.js; pino does not declare it as a dependency, so under pnpm's
+    // strict layout webpack cannot statically resolve the specifier and the
+    // production build fails with "Module not found: Can't resolve
+    // 'pino-pretty'" (observed on Vercel, build EDhVEPxEA). The browser bundle
+    // never pretty-prints logs, so resolving the specifier to nothing is
+    // correct — installing pino-pretty here would ship dead weight.
+    config.plugins.push(
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^pino-pretty$/,
+      })
+    );
+
     return config;
   },
 };
